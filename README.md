@@ -2,7 +2,9 @@
 
 把 [creen.ai](https://www.creen.ai) 的 **AI 图像/视频生成**能力封装为本地 **OpenAI 兼容 API 网关**。
 
-单进程 Node.js 服务，零外部依赖（除 express），支持**账号池轮换**与**纯协议直连**，可在任意 OpenAI 客户端中使用 Creen 的 68 个模型（Sora 2 / VEO 3.1 / Nano Banana Pro / Seedance / Kling / Wan …）。
+单进程服务，**零依赖**（bun 运行时），支持**账号池轮换**与**纯协议直连**，可在任意 OpenAI 客户端中使用 Creen 的 **60 个模型**（Sora 2 / VEO 3.1 / Nano Banana Pro / Seedance / Kling / Wan …）。
+
+> 本仓库同时是该平台的**完整逆向分析资料库**（31 个前端 chunk、30 份分析文档、208 个 API 端点）。
 
 ---
 
