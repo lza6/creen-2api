@@ -1,0 +1,8 @@
+### FILE 7347-8d047b580dd4df4b.js  chunk=7347  modules=1  totalBytes=17698
+
+========== MODULE 77347 (args=[e,t,n] bodyLen=17614) ==========
+EXPORTS: [{"exported":"Icon","local":"el"}]
+IMPORTS: ["12115"]
+DYN_CHUNKS: []
+FUNCS: ["f","u","e","l","p","h","v","x","k","j","T","_","z","U","q","r","g","m","b","y","J","B","W","ei","s","t"]
+STRINGS: ["object","string","boolean","number","unset","undefined","none","IconifyId","https://api.simplesvg.com","https://api.unisvg.com","https://api.iconify.design","function","pending","aborted","failed","success","abort","completed","http://www.w3.org/2000/svg","http://www.w3.org/1999/xlink","aria-hidden","img","inline-block","currentColor","transparent","no-repeat","rotate","svg","iconify","provider","prefix","iconify--","icon","style","children","onLoad","mode","ssr","className","inline","hFlip","vFlip","true","flip","horizontal","vertical","color","deg","ariaHidden","defs","auto","width","height","suffix","iconifyReact","mask","xlink:","span","icons","custom","next","Invalid IconifyPreload syntax."]

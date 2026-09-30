@@ -1,0 +1,622 @@
+{
+  "imageModels": [
+    {
+      "name": "Creen AI 2.0",
+      "fee": 1,
+      "id": 1
+    },
+    {
+      "name": "Z-image-turbo",
+      "fee": 10,
+      "id": 3
+    },
+    {
+      "name": "GPT Image2.5 Sunburst",
+      "fee": 10,
+      "id": 25
+    },
+    {
+      "name": "GPT Image2.5 Flare",
+      "fee": 10,
+      "id": 24
+    },
+    {
+      "name": "GPT Image2",
+      "fee": 10,
+      "id": 14
+    },
+    {
+      "name": "Nano Banana 2 Lite",
+      "fee": 20,
+      "id": 22
+    },
+    {
+      "name": "Nano Banana 2",
+      "fee": 20,
+      "id": 7
+    },
+    {
+      "name": "Nano Banana Pro",
+      "fee": 45,
+      "id": 6
+    },
+    {
+      "name": "Nano Banana",
+      "fee": 20,
+      "id": 8
+    },
+    {
+      "name": "Seedream 5.0 Pro",
+      "fee": 20,
+      "id": 21
+    },
+    {
+      "name": "Seedream 5.0 Lite",
+      "fee": 15,
+      "id": 10
+    },
+    {
+      "name": "Seedream 4.5",
+      "fee": 20,
+      "id": 4
+    },
+    {
+      "name": "Seedream 4.0",
+      "fee": 15,
+      "id": 18
+    },
+    {
+      "name": "Qwen 3.0 Pro",
+      "fee": 15,
+      "id": 19
+    },
+    {
+      "name": "Qwen 3.0",
+      "fee": 10,
+      "id": 20
+    },
+    {
+      "name": "Qwen Image 2.0",
+      "fee": 10,
+      "id": 15
+    },
+    {
+      "name": "Qwen Image 2.0 Pro",
+      "fee": 15,
+      "id": 16
+    },
+    {
+      "name": "Wanx2.7",
+      "fee": 15,
+      "id": 17
+    },
+    {
+      "name": "Wanx2.7 Pro",
+      "fee": 30,
+      "id": 23
+    },
+    {
+      "name": "Grok Imagine",
+      "fee": 20,
+      "id": 9
+    }
+  ],
+  "videoModels": [
+    {
+      "name": "Creen AI 2.0",
+      "fee": 50,
+      "vip": 2,
+      "id": 1
+    },
+    {
+      "name": "Hailuo 2.3 Fast",
+      "fee": 60,
+      "vip": 2,
+      "id": 27
+    },
+    {
+      "name": "Hailuo 2.3",
+      "fee": 60,
+      "vip": 2,
+      "id": 28
+    },
+    {
+      "name": "Hailuo 02",
+      "fee": 55,
+      "vip": 2,
+      "id": 29
+    },
+    {
+      "name": "Minimax H3",
+      "fee": 150,
+      "vip": 2,
+      "id": 67
+    },
+    {
+      "name": "Wan 2.6",
+      "fee": 125,
+      "vip": 2,
+      "id": 51
+    },
+    {
+      "name": "Wan2.2 Plus",
+      "fee": 40,
+      "vip": 2,
+      "id": 62
+    },
+    {
+      "name": "Wan2.2 Flash",
+      "fee": 35,
+      "vip": 2,
+      "id": 61
+    },
+    {
+      "name": "Wan 2.5",
+      "fee": 55,
+      "vip": 2,
+      "id": 53
+    },
+    {
+      "name": "Wan 3.0",
+      "fee": 70,
+      "vip": 2,
+      "id": 69
+    },
+    {
+      "name": "Wan 3.0 Prime",
+      "fee": 100,
+      "vip": 2,
+      "id": 70
+    },
+    {
+      "name": "Wan 2.7",
+      "fee": 200,
+      "vip": 2,
+      "id": 50
+    },
+    {
+      "name": "Seedance 1.5 Pro",
+      "fee": 55,
+      "vip": 2,
+      "id": 45
+    },
+    {
+      "name": "Seedance 1.0 Pro",
+      "fee": 55,
+      "vip": 2,
+      "id": 46
+    },
+    {
+      "name": "Seedance 1.0 Pro Fast",
+      "fee": 50,
+      "vip": 2,
+      "id": 47
+    },
+    {
+      "name": "Seedance 2.5",
+      "fee": 210,
+      "vip": 2,
+      "id": 68
+    },
+    {
+      "name": "Seedance 2.0 Mini",
+      "fee": 70,
+      "vip": 2,
+      "id": 63
+    },
+    {
+      "name": "Seedance 2.0",
+      "fee": 140,
+      "vip": 2,
+      "id": 43
+    },
+    {
+      "name": "Seedance 2.0 Fast",
+      "fee": 110,
+      "vip": 2,
+      "id": 44
+    },
+    {
+      "name": "Vidu Q3",
+      "fee": 100,
+      "vip": 2,
+      "id": 56
+    },
+    {
+      "name": "Vidu Q2",
+      "fee": 25,
+      "vip": 2,
+      "id": 57
+    },
+    {
+      "name": "Kling 3.0 Pro",
+      "fee": 85,
+      "vip": 2,
+      "id": 58
+    },
+    {
+      "name": "Kling 2.6 Pro",
+      "fee": 60,
+      "vip": 2,
+      "id": 59
+    },
+    {
+      "name": "Kling 2.6",
+      "fee": 60,
+      "vip": 2,
+      "id": 32
+    },
+    {
+      "name": "Kling 2.5 Turbo",
+      "fee": 60,
+      "vip": 2,
+      "id": 34
+    },
+    {
+      "name": "Kling 2.1 Master",
+      "fee": 55,
+      "vip": 2,
+      "id": 35
+    },
+    {
+      "name": "Kling 2.1",
+      "fee": 80,
+      "vip": 2,
+      "id": 36
+    },
+    {
+      "name": "Kling O1",
+      "fee": 120,
+      "vip": 2,
+      "id": 33
+    },
+    {
+      "name": "Kling 3.0 Omni",
+      "fee": 85,
+      "vip": 2,
+      "id": 30
+    },
+    {
+      "name": "Kling 3.0",
+      "fee": 85,
+      "vip": 2,
+      "id": 31
+    },
+    {
+      "name": "Veo 3.1",
+      "fee": 155,
+      "vip": 2,
+      "id": 39
+    },
+    {
+      "name": "Veo 3",
+      "fee": 225,
+      "vip": 2,
+      "id": 41
+    },
+    {
+      "name": "Veo 3 Fast",
+      "fee": 65,
+      "vip": 2,
+      "id": 42
+    },
+    {
+      "name": "Veo 3.1 Fast",
+      "fee": 90,
+      "vip": 2,
+      "id": 40
+    },
+    {
+      "name": "Sora 2",
+      "fee": 55,
+      "vip": 2,
+      "id": 37
+    },
+    {
+      "name": "Happy Horse 1.1",
+      "fee": 110,
+      "vip": 2,
+      "id": 64
+    },
+    {
+      "name": "Happy Horse 1.0",
+      "fee": 110,
+      "vip": 2,
+      "id": 48
+    }
+  ],
+  "lipSyncModels": [
+    {
+      "name": "Creen Lip Sync",
+      "fee": 15
+    },
+    {
+      "name": "Seedance 2.5",
+      "fee": 210
+    },
+    {
+      "name": "Minimax H3",
+      "fee": 150
+    }
+  ],
+  "motionControlModels": [
+    {
+      "name": "Kling 3.0 Pro",
+      "fee": 85
+    },
+    {
+      "name": "Kling 2.6",
+      "fee": 60
+    },
+    {
+      "name": "Kling 2.6 Pro",
+      "fee": 60
+    },
+    {
+      "name": "Creen AI 2.0",
+      "fee": 50
+    },
+    {
+      "name": "Kling 3.0",
+      "fee": 85
+    }
+  ],
+  "comicModels": [
+    {
+      "name": "GPT Image2",
+      "fee": 10
+    },
+    {
+      "name": "GPT Image2.5 Flare",
+      "fee": 10
+    },
+    {
+      "name": "GPT Image2.5 Sunburst",
+      "fee": 10
+    }
+  ],
+  "comicStyles": [
+    {
+      "code": "korean_webtoon",
+      "name": "Korean Webtoon",
+      "desc": "Romantic and modern vertical manhwa style"
+    },
+    {
+      "code": "japanese_manga",
+      "name": "Japanese Manga",
+      "desc": "Classic Shonen ink & screentone manga style"
+    },
+    {
+      "code": "american_comic",
+      "name": "American Comic",
+      "desc": "Bold line superhero & vintage comic book art"
+    },
+    {
+      "code": "chinese_guoman",
+      "name": "Chinese Guoman",
+      "desc": "Ethereal wuxia and ancient Chinese manhua art"
+    },
+    {
+      "code": "european_comic",
+      "name": "European Comic",
+      "desc": "Franco-Belgian ligne claire adventure comic art"
+    },
+    {
+      "code": "indie_graphic",
+      "name": "Indie Graphic",
+      "desc": "Atmospheric and artistic graphic novel illustration"
+    },
+    {
+      "code": "retro_comic",
+      "name": "Retro Comic",
+      "desc": "50s-70s vintage pulp and sci-fi comic aesthetic"
+    },
+    {
+      "code": "watercolor",
+      "name": "Watercolor",
+      "desc": "Soft poetic watercolor and fairytale storybook art"
+    }
+  ],
+  "comicFormats": [
+    {
+      "format": "classic",
+      "name": "Classic",
+      "panel": 4
+    },
+    {
+      "format": "flow",
+      "name": "Flow",
+      "panel": 4
+    },
+    {
+      "format": "page",
+      "name": "Page",
+      "panel": 4
+    },
+    {
+      "format": "feature",
+      "name": "Feature",
+      "panel": 4
+    },
+    {
+      "format": "manga",
+      "name": "Manga",
+      "panel": 4
+    },
+    {
+      "format": "portrait",
+      "name": "Portrait",
+      "panel": 4
+    },
+    {
+      "format": "diagonal",
+      "name": "Diagonal",
+      "panel": 4
+    },
+    {
+      "format": "action",
+      "name": "Action",
+      "panel": 4
+    },
+    {
+      "format": "classic",
+      "name": "Classic",
+      "panel": 5
+    },
+    {
+      "format": "flow",
+      "name": "Flow",
+      "panel": 5
+    },
+    {
+      "format": "page",
+      "name": "Page",
+      "panel": 5
+    },
+    {
+      "format": "feature",
+      "name": "Feature",
+      "panel": 5
+    },
+    {
+      "format": "manga",
+      "name": "Manga",
+      "panel": 5
+    },
+    {
+      "format": "portrait",
+      "name": "Portrait",
+      "panel": 5
+    },
+    {
+      "format": "diagonal",
+      "name": "Diagonal",
+      "panel": 5
+    },
+    {
+      "format": "action",
+      "name": "Action",
+      "panel": 5
+    },
+    {
+      "format": "classic",
+      "name": "Classic",
+      "panel": 6
+    },
+    {
+      "format": "flow",
+      "name": "Flow",
+      "panel": 6
+    },
+    {
+      "format": "page",
+      "name": "Page",
+      "panel": 6
+    },
+    {
+      "format": "feature",
+      "name": "Feature",
+      "panel": 6
+    },
+    {
+      "format": "manga",
+      "name": "Manga",
+      "panel": 6
+    },
+    {
+      "format": "portrait",
+      "name": "Portrait",
+      "panel": 6
+    },
+    {
+      "format": "diagonal",
+      "name": "Diagonal",
+      "panel": 6
+    },
+    {
+      "format": "action",
+      "name": "Action",
+      "panel": 6
+    },
+    {
+      "format": "classic",
+      "name": "Classic",
+      "panel": 7
+    },
+    {
+      "format": "flow",
+      "name": "Flow",
+      "panel": 7
+    },
+    {
+      "format": "page",
+      "name": "Page",
+      "panel": 7
+    },
+    {
+      "format": "feature",
+      "name": "Feature",
+      "panel": 7
+    },
+    {
+      "format": "manga",
+      "name": "Manga",
+      "panel": 7
+    },
+    {
+      "format": "portrait",
+      "name": "Portrait",
+      "panel": 7
+    },
+    {
+      "format": "diagonal",
+      "name": "Diagonal",
+      "panel": 7
+    },
+    {
+      "format": "action",
+      "name": "Action",
+      "panel": 7
+    },
+    {
+      "format": "classic",
+      "name": "Classic",
+      "panel": 8
+    },
+    {
+      "format": "flow",
+      "name": "Flow",
+      "panel": 8
+    },
+    {
+      "format": "page",
+      "name": "Page",
+      "panel": 8
+    },
+    {
+      "format": "feature",
+      "name": "Feature",
+      "panel": 8
+    },
+    {
+      "format": "manga",
+      "name": "Manga",
+      "panel": 8
+    },
+    {
+      "format": "portrait",
+      "name": "Portrait",
+      "panel": 8
+    },
+    {
+      "format": "diagonal",
+      "name": "Diagonal",
+      "panel": 8
+    },
+    {
+      "format": "action",
+      "name": "Action",
+      "panel": 8
+    }
+  ]
+}

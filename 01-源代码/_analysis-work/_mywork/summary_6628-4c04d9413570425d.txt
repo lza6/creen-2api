@@ -1,0 +1,31 @@
+### FILE 6628-4c04d9413570425d.js  chunk=6628  modules=4  totalBytes=41483
+
+========== MODULE 11679 (args=[e,t,s] bodyLen=1953) ==========
+EXPORTS: [{"exported":"default","local":"m"}]
+IMPORTS: ["95155","12115","98715","59654","26865","36928","523","52852","35255"]
+DYN_CHUNKS: []
+FUNCS: ["m"]
+STRINGS: ["true","Account info loaded successfully","Failed to initialize auth info:","Failed to initialize auth info","Attempting guest login...","Guest login failed:","Starting global authentication initialization...","Global authentication initialization completed","Failed to initialize guest info:","Failed to wait for global initialization:","Failed to initialize app:","div","w-full h-full flex flex-col justify-center items-center","mb-2","Loading..."]
+
+========== MODULE 35257 (args=[e,t,s] bodyLen=279) ==========
+EXPORTS: [{"exported":"Yq","local":"l"}]
+IMPORTS: []
+DYN_CHUNKS: []
+FUNCS: ["l"]
+STRINGS: ["string","number"]
+
+========== MODULE 36148 (args=[e,t,s] bodyLen=6665) ==========
+EXPORTS: [{"exported":"VA","local":"r"}]
+IMPORTS: ["23464","37532","10896"]
+DYN_CHUNKS: []
+API: ["/api/stat/buyClick","/api/stat/buyShow","/api/stat/useAiHug","/api/stat/useAiKiss","/api/stat/useImageFaceSwap","/api/stat/useImageToVideo","/api/stat/useTextToImage","/api/stat/useTextToVideo","/api/stat/useVideoFaceSwap"]
+HOOKS: ["useAiHug","useAiKiss","useImageFaceSwap","useImageToVideo","useTextToImage","useTextToVideo","useVideoFaceSwap"]
+STRINGS: ["POST","x-auth-token","StatControllerApi.buyClick","StatControllerApi.buyShow","StatControllerApi.useAiHug","StatControllerApi.useAiKiss","StatControllerApi.useImageFaceSwap","StatControllerApi.useImageToVideo","StatControllerApi.useTextToImage","StatControllerApi.useTextToVideo","StatControllerApi.useVideoFaceSwap"]
+
+========== MODULE 76628 (args=[e,t,s] bodyLen=32478) ==========
+EXPORTS: [{"exported":"default","local":"ed"},{"exported":"useScrollContainer","local":"eo"}]
+IMPORTS: ["95155","12115","15490","1567","75813","77347","17652","98715","34105","18922","21515","35121","6610","61410","91158","20044","94001","32774","91930","45014","74692","92550","35695","54512","11679","88825","57782","21096","65283","36791","43805","27135","98942","98295","43194","58850","52852","523","59654","35257","26865","36148","72273","28801"]
+DYN_CHUNKS: []
+HOOKS: ["useCallback","useMemo","useState","useRef","useEffect"]
+FUNCS: ["m","U","E","D","_","z","V","Y","M","en","eo","ed"]
+STRINGS: ["links.aboutUs","links.downloadIOS","links.downloadAndroid","links.contactUs","links.faq","links.refundPolicy","links.privacy","links.terms","iOS","fontisto:apple","Google","fontisto:google","APK","fontisto:android","footer","div","w-full","text-small font-semibold text-default-600","mt-6 space-y-4","text-default-400 text-sm","flex w-full flex-col max-w-7xl mx-auto px-4 sm:px-6","mt-8","py-8","xl:grid xl:grid-cols-3 xl:gap-8","grid grid-cols-2 md:gap-8","sections.legal","sections.support","md:grid md:grid-cols-2 md:gap-8","sections.resources","space-y-3 mt-4 xl:mt-0","flex items-center justify-start gap-1","span","text-medium font-medium","text-small text-default-500","description","text-small text-default-400","pay cards","none","http://","https://","common","video","solar:videocamera-record-linear","image","solar:gallery-linear","solar:widget-linear","space-y-4","font-bold","text-warning","solar:star-bold","flex w-full flex-col max-w-7xl mx-auto relative","px-10 pt-6 pb-8","grid grid-cols-2 gap-8","border-r-small border-divider pr-4","space-y-8","absolute bottom-1 right-6 flex justify-end","solar:alt-arrow-right-outline","light","expandAll","Expand All","aria-label","py-1","py-0","p-0 text-sm space-y-1.5 pb-2","py-1 px-3","empty","edit","audio","px-3","font-semibold","NEW","flex flex-col","solar:soundwave-linear","solar:clapperboard-edit-linear","grid gap-8","grid-cols-1","grid-cols-2","grid-cols-3","grid-cols-4","mt-4 flex justify-end","popular","POPULAR","flex flex-wrap gap-2.5","text-orange-500 shrink-0","solar:fire-bold","py-2 text-sm space-y-1.5 pb-2","sidebar.account","success","flex items-center gap-2","bottom","border-amber-500","full","ghost","default","p-0","px-4 flex gap-2","flex-1 min-w-0","max-w-full","text-ellipsis overflow-hidden line-clamp-1 text-left","text-left break-all whitespace-normal","button","notSet","upgrade","flex gap-2 px-4 items-center","flex-1 text-ellipsis overflow-hidden","PLUS","PRO","MAX","ULTRA","VIP","flex-1","membership","freePlan","flex flex-col gap-2 px-1 py-2 bg-default-100 rounded-lg mx-2","flex gap-2 px-2 items-center","credits","flex gap-1 items-center text-warning font-bold","solar:database-bold","px-2","Daily free credits expiration progress"]

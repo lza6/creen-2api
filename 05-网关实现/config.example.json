@@ -1,0 +1,48 @@
+{
+  "listen_addr": "127.0.0.1:47840",
+  "upstream_base_url": "https://www.creen.ai",
+
+  "//token": "账号池。支持两种填法：",
+  "//token2": "  1) tokens: [\"eyJhbGci...\", \"...\"]        → 直接填 x-auth-token 值",
+  "//token3": "  2) accounts: [{email, password}] + email_config → 自动注册/登录获取 token",
+  "tokens": [],
+  "accounts": [],
+
+  "//email": "注册机用的邮箱 API（后续填入）。留空则禁用自动注册",
+  "email_config": {
+    "provider": "",
+    "api_base": "",
+    "api_key": "",
+    "domain": ""
+  },
+
+  "//model": "默认模型 ID（见 /v1/models 或 docs/MODELS.md）",
+  "default_model": 6,
+
+  "request_timeout_sec": 180,
+  "poll_interval_sec": 3,
+  "poll_max_attempts": 100,
+
+  "max_concurrent_requests": 8,
+  "per_token_concurrent": 2,
+
+  "catalog_refresh_min": 60,
+
+  "rate_limit_enabled": true,
+  "rate_limit_requests": 120,
+  "rate_limit_window_sec": 3600,
+
+  "retry_enabled": true,
+  "max_attempts": 3,
+  "cooldown_map": "0,15,60,120,300",
+
+  "download_media": true,
+  "media_dir": "data/media",
+
+  "ui_enabled": true,
+  "redact_logs": true,
+
+  "//auto_renew": "token 过期自动续期（重新登录或重新注册）",
+  "auto_renew": true,
+  "token_check_min": 30
+}

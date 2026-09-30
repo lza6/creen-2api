@@ -1,0 +1,55 @@
+# 依赖
+node_modules/
+target/
+__pycache__/
+*.pyc
+
+# 构建产物
+dist/
+build/
+*.exe
+
+# 配置（含 token，绝不入库）
+config.json
+config.local.json
+05-网关实现/config.json
+05-网关实现/config.local.json
+.env
+.env.local
+*.secret
+
+# 运行时数据
+logs/
+*.log
+data/cache/
+05-网关实现/data/*.json
+
+# 浏览器 profile / 缓存（体积大）
+chrome-profile/
+.browser-profile/
+**/chrome-profile/
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 临时产物
+*.part
+*.tmp
+_test/
+
+# 抓取产物的重体积 chunk 副本（每个路由都含完整副本，体积重复）
+# 保留 metadata.json 与 _evidence/；如需完整抓取数据请用 04-逆向工具链 的脚本重新抓取
+03-抓取验证/_*/
+!03-抓取验证/_evidence/
+
+# 逐模块切片（481 个中间产物，可由 _tools 脚本重新生成）
+01-源代码/_analysis-work/_mod/
+01-源代码/_analysis-work/_tools/node_modules/

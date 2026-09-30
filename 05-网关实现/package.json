@@ -1,0 +1,37 @@
+{
+  "name": "creen-2api",
+  "version": "0.1.0",
+  "description": "Creen (creen.ai) AI 图像/视频生成逆向为 OpenAI 兼容 API 网关（bun 运行时）",
+  "type": "module",
+  "module": "src/index.ts",
+  "main": "src/index.ts",
+  "author": "lza6",
+  "license": "MIT",
+  "keywords": [
+    "creen",
+    "creen-ai",
+    "openai-compatible",
+    "api-gateway",
+    "image-generation",
+    "video-generation",
+    "reverse-engineering",
+    "bun"
+  ],
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "dev": "bun --watch run src/index.ts",
+    "test": "bun test",
+    "test:unit": "bun test test/unit",
+    "test:e2e": "bun test test/e2e",
+    "login": "bun run src/tools/login-helper.ts",
+    "register": "bun run src/tools/register-bot.ts",
+    "doctor": "bun run src/tools/doctor.ts"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "engines": {
+    "bun": ">=1.1"
+  }
+}

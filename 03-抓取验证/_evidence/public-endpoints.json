@@ -1,0 +1,116 @@
+{
+ "/api/home/health": {
+  "code": "200",
+  "http": 200,
+  "size": 5,
+  "desc": "对象:code,data,errorCode,fieldErrors,msg"
+ },
+ "/api/home/banners": {
+  "code": "200",
+  "http": 200,
+  "size": 12,
+  "desc": "数组"
+ },
+ "/api/home/getFeaturesByCategory": {
+  "code": "200",
+  "http": 200,
+  "size": 4,
+  "desc": "数组"
+ },
+ "/api/home/getModelsByCategory": {
+  "code": "200",
+  "http": 200,
+  "size": 2,
+  "desc": "数组"
+ },
+ "/api/home/getAdsImageModels": {
+  "code": "200",
+  "http": 200,
+  "size": 0,
+  "desc": "数组"
+ },
+ "/api/aiImage/models": {
+  "code": "200",
+  "http": 200,
+  "size": 20,
+  "desc": "数组"
+ },
+ "/api/aiVideo/models": {
+  "code": "200",
+  "http": 200,
+  "size": 37,
+  "desc": "数组"
+ },
+ "/api/aiVideo/editModels": {
+  "code": "400",
+  "http": 200,
+  "size": 5,
+  "desc": "对象:code,data,errorCode,fieldErrors,msg"
+ },
+ "/api/aiVideo/lipSyncModels": {
+  "code": "200",
+  "http": 200,
+  "size": 3,
+  "desc": "数组"
+ },
+ "/api/aiVideo/motionControlModels": {
+  "code": "200",
+  "http": 200,
+  "size": 5,
+  "desc": "数组"
+ },
+ "/api/aiVideo/motionControlTemplates": {
+  "code": "200",
+  "http": 200,
+  "size": 20,
+  "desc": "数组"
+ },
+ "/api/aiVideo/talkingAvatarModels": {
+  "code": "401",
+  "http": 200,
+  "size": 3,
+  "desc": "对象:code,fieldErrors,msg"
+ },
+ "/api/aiComic/models": {
+  "code": "200",
+  "http": 200,
+  "size": 2,
+  "desc": "对象:categories,featuresModels"
+ },
+ "/api/aiComic/styles": {
+  "code": "200",
+  "http": 200,
+  "size": 8,
+  "desc": "数组"
+ },
+ "/api/aiComic/formats": {
+  "code": "200",
+  "http": 200,
+  "size": 40,
+  "desc": "数组"
+ },
+ "/api/audio/voiceTemplates": {
+  "code": "401",
+  "http": 200,
+  "size": 3,
+  "desc": "对象:code,fieldErrors,msg"
+ },
+ "/api/audio/getLanguageForVoice": {
+  "code": "401",
+  "http": 200,
+  "size": 3,
+  "desc": "对象:code,fieldErrors,msg"
+ },
+ "/api/auth/getAccount": {
+  "code": "401",
+  "http": 200,
+  "size": 3,
+  "desc": "对象:code,fieldErrors,msg"
+ },
+ "/api/aiExplore/page": {
+  "code": "200",
+  "http": 200,
+  "size": 4,
+  "desc": "对象:current,records,size,total"
+ }
+}
