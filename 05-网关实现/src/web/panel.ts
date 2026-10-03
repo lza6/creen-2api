@@ -52,6 +52,12 @@ code{background:#21262d;padding:1px 5px;border-radius:4px;font-size:11.5px}
 
 <div class="grid" id="stats"></div>
 
+<div style="margin-bottom:14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+  <input id="key" type="password" placeholder="API Key（若网关启用鉴权，必填）" autocomplete="off"
+    style="flex:1;min-width:240px;background:#0d1117;border:1px solid var(--border);color:var(--text);padding:7px 10px;border-radius:6px;font-size:12px" />
+  <button onclick="saveKey()">保存 Key</button>
+</div>
+
 <div style="margin-bottom:20px">
   <button class="p" onclick="refreshCatalog()">刷新模型目录</button>
   <button onclick="refreshPool()">刷新账号积分</button>
@@ -86,9 +92,28 @@ curl -X POST http://127.0.0.1:47840/v1/images/generations \\
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
+// 网关 API Key：仅存本地，随请求头发送（非 cookie，避免 CSRF）
+const KEY_STORE = "creen_gw_key";
+let apiKey = localStorage.getItem(KEY_STORE) || "";
+
+function saveKey() {
+  apiKey = $("#key").value.trim();
+  localStorage.setItem(KEY_STORE, apiKey);
+  load();
+}
+
+// 带鉴权头的 fetch 包装
+function api(path, opts = {}) {
+  const headers = { ...(opts.headers || {}) };
+  if (apiKey) headers["authorization"] = "Bearer " + apiKey;
+  return fetch(path, { ...opts, headers });
+}
+
 async function load() {
   try {
-    const st = await (await fetch("/api/status")).json();
+    const r = await api("/api/status");
+    if (!r.ok) throw new Error("HTTP " + r.status + (r.status === 401 ? "（API Key 无效或缺失）" : ""));
+    const st = await r.json();
     const pool = st.pool || [];
     $("#stats").innerHTML = [
       ["模型总数", st.catalog?.count ?? 0],
@@ -106,7 +131,8 @@ async function load() {
         </tr>\`).join("")
       : '<tr><td colspan="6" style="color:#8b949e;text-align:center;padding:16px">未配置 token（config.json 的 tokens）</td></tr>';
 
-    const models = await (await fetch("/v1/models")).json();
+    const mr = await api("/v1/models");
+    const models = mr.ok ? await mr.json() : { data: [] };
     $("#modelCount").textContent = models.data.length;
     $("#modelTable tbody").innerHTML = models.data.map(m => \`<tr>
         <td>\${esc(m.id)}</td>
@@ -116,11 +142,12 @@ async function load() {
         <td>\${m._vip_level || "-"}</td>
       </tr>\`).join("");
   } catch (e) {
-    console.error(e);
+    $("#stats").innerHTML = \`<div class="card" style="grid-column:1/-1;color:#f85149"><div class="v" style="font-size:13px">\${esc(e.message)}</div><div class="l">加载失败</div></div>\`;
   }
 }
-async function refreshCatalog() { await fetch("/api/catalog/refresh", { method: "POST" }); load(); }
-async function refreshPool() { await fetch("/api/pool/refresh", { method: "POST" }); load(); }
+async function refreshCatalog() { await api("/api/catalog/refresh", { method: "POST" }); load(); }
+async function refreshPool() { await api("/api/pool/refresh", { method: "POST" }); load(); }
+$("#key").value = apiKey;
 load();
 setInterval(load, 15000);
 </script>

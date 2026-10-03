@@ -9,9 +9,10 @@
 
 import type { Config } from "../core/config";
 import type { ModelCatalog, ModelInfo } from "../core/catalog";
-import type { AccountPool, PoolToken } from "../core/account-pool";
+import type { AccountPool } from "../core/account-pool";
 import type { GenerationService, GenerateOptions } from "../core/generation";
 import { UpstreamError, type UpstreamClient } from "../core/upstream";
+import type { MediaStore } from "../core/media";
 
 export interface ApiContext {
   cfg: Config;
@@ -19,6 +20,8 @@ export interface ApiContext {
   pool: AccountPool;
   gen: GenerationService;
   client: UpstreamClient;
+  /** 媒体本地化（config.download_media 开启时落盘） */
+  media?: MediaStore;
 }
 
 export function jsonResponse(data: any, status = 200): Response {
@@ -98,7 +101,7 @@ export async function handleImageGenerations(req: Request, ctx: ApiContext): Pro
   };
 
   try {
-    const urls = await runGeneration(opts, ctx);
+    const urls = (await runGeneration(opts, ctx)).map((u) => absolutize(u, req));
     const wantB64 = body.response_format === "b64_json";
     const data = wantB64
       ? await Promise.all(urls.map(async (u) => ({ b64_json: await fetchAsBase64(u, ctx) })))
@@ -158,7 +161,7 @@ export async function handleVideoGenerations(req: Request, ctx: ApiContext): Pro
   };
 
   try {
-    const urls = await runGeneration(opts, ctx);
+    const urls = (await runGeneration(opts, ctx)).map((u) => absolutize(u, req));
     return jsonResponse({
       created: Math.floor(Date.now() / 1000),
       data: urls.map((u) => ({ url: u })),
@@ -213,7 +216,7 @@ export async function handleChatCompletions(req: Request, ctx: ApiContext): Prom
   };
 
   try {
-    const urls = await runGeneration(opts, ctx);
+    const urls = (await runGeneration(opts, ctx)).map((u) => absolutize(u, req));
     const content = urls.map((u) => (kind === "video" ? `![video](${u})` : `![image](${u})`)).join("\n");
     const id = "chatcmpl-" + crypto.randomUUID().replace(/-/g, "").slice(0, 24);
 
@@ -304,11 +307,13 @@ async function runGeneration(opts: GenerateOptions, ctx: ApiContext): Promise<st
       if (urls.length === 0) throw new UpstreamError("生成成功但未找到结果 URL", "NO_RESULT_URL", 0);
 
       ctx.pool.release(token, true);
-      // 扣减本地积分估算
+      // 扣减本地积分估算并立即持久化
       if (token.integral !== undefined) token.integral = Math.max(0, token.integral - need);
+      ctx.pool.save();
 
-      ctx.pool.snapshot(); // 触发持久化调度
-      return urls;
+      // 媒体本地化：上游 URL 有有效期，落盘后返回本地稳定 URL
+      const finalUrls = ctx.media?.enabled ? await ctx.media.persistMany(urls) : urls;
+      return finalUrls;
     } catch (e) {
       ctx.pool.release(token, false, e);
       lastErr = e;
@@ -358,6 +363,13 @@ async function fetchAsBase64(url: string, ctx: ApiContext): Promise<string> {
 }
 
 /* ---------------- 工具函数 ---------------- */
+
+/** 把本地媒体相对路径补全为绝对 URL（OpenAI 客户端需要完整 URL） */
+function absolutize(url: string, req: Request): string {
+  if (/^https?:\/\//i.test(url)) return url;
+  const u = new URL(req.url);
+  return `${u.protocol}//${u.host}${url.startsWith("/") ? "" : "/"}${url}`;
+}
 
 function normalizeImages(v: string | string[] | undefined): string[] {
   if (!v) return [];
@@ -423,7 +435,7 @@ function mapError(e: unknown): Response {
     "401": 401,
     "403": 403,
     NO_TOKEN: 401,
-    NO_ACCOUNT: 500,
+    NO_ACCOUNT: 503,
     NO_AVAILABLE_ACCOUNT: 503,
     CLOUDFLARE_BLOCKED: 502,
     "-1": 402,

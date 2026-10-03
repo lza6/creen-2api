@@ -1,0 +1,61 @@
+# Creen-2API 网关 CI —— 类型检查 + 单元测试
+#
+# 设计要点：
+#   * 只跑"零积分消耗"的检查：tsc + 单元测试（无网络）。
+#     绝不跑 test/e2e —— 它真实请求上游，且违反 Constitution III（上游积分红线）。
+#   * 网关代码位于 05-网关实现/ 子目录，故所有命令先 cd 进入。
+#   * gitleaks 扫描硬编码密钥（config.json 含 token，绝不能入库）。
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "05-网关实现/**"
+      - ".github/workflows/ci.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "05-网关实现/**"
+      - ".github/workflows/ci.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── 类型检查 + 单元测试 ────────────────────────────────────────────
+  test:
+    name: typecheck & unit tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 05-网关实现
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile || bun install
+
+      - name: Quality gate (typecheck + unit tests + config audit)
+        run: bun run check
+
+  # ── 密钥泄漏扫描 ───────────────────────────────────────────────────
+  security:
+    name: secret scan (gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: gitleaks detect
+        run: |
+          curl -sSfL https://github.com/gitleaks/gitleaks/releases/download/v8.18.4/gitleaks_8.18.4_linux_x64.tar.gz -o /tmp/gitleaks.tar.gz
+          tar -xzf /tmp/gitleaks.tar.gz -C /usr/local/bin gitleaks
+          gitleaks detect --source . --no-banner --redact

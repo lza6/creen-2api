@@ -2,6 +2,13 @@
   "listen_addr": "127.0.0.1:47840",
   "upstream_base_url": "https://www.creen.ai",
 
+  "//gateway_auth": "网关入口鉴权。非本机部署时【必须】配置，否则拒绝启动",
+  "gateway_api_key": "",
+  "//trust_proxy": "置于反向代理后时设为 true，使限流按真实客户端 IP 分桶",
+  "trust_proxy": false,
+  "//allow_insecure_public": "仅在确信可信内网时，显式允许「非回环 + 无密钥」的危险组合",
+  "allow_insecure_public": false,
+
   "//token": "账号池。支持两种填法：",
   "//token2": "  1) tokens: [\"eyJhbGci...\", \"...\"]        → 直接填 x-auth-token 值",
   "//token3": "  2) accounts: [{email, password}] + email_config → 自动注册/登录获取 token",
@@ -14,6 +21,16 @@
     "api_base": "",
     "api_key": "",
     "domain": ""
+  },
+
+  "//mail_api": "Cloud Mail 邮箱 API —— 验证码读取器（供 register-helper 自动读码）",
+  "//mail_api2": "密码建议放环境变量 CREEN_MAIL_ADMIN_PASSWORD，勿落盘",
+  "mail_api": {
+    "enabled": false,
+    "api_base": "",
+    "admin_email": "",
+    "admin_password": "",
+    "domains": []
   },
 
   "//model": "默认模型 ID（见 /v1/models 或 docs/MODELS.md）",

@@ -1,0 +1,34 @@
+# Creen2API 网关 —— 生产/开发编排
+# 用法：
+#   cp config.example.json config.json && 编辑 config.json（填入 tokens 与 gateway_api_key）
+#   docker compose up -d
+#
+# 安全提示：容器监听 0.0.0.0，务必在 config.json 设置 gateway_api_key（见 README「安全」）。
+
+services:
+  creen-2api:
+    build: .
+    image: creen-2api:latest
+    container_name: creen-2api
+    restart: unless-stopped
+    ports:
+      # 仅绑定本机回环，对外暴露请经反向代理并启用 https
+      - "127.0.0.1:47840:47840"
+    volumes:
+      # 配置（含 token / api key，务必不要入库）
+      - ./config.json:/app/config.json:ro
+      # 运行时数据：账号池与媒体落盘
+      - ./data:/app/data
+    environment:
+      - CREEN_CONFIG=/app/config.json
+    healthcheck:
+      test: ["CMD", "bun", "-e", "fetch('http://127.0.0.1:47840/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

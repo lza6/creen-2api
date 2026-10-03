@@ -22,7 +22,8 @@ config.local.json
 logs/
 *.log
 data/cache/
-05-网关实现/data/*.json
+05-网关实现/data/
+05-网关实现/config.test.json
 
 # 浏览器 profile / 缓存（体积大）
 chrome-profile/
@@ -34,6 +35,9 @@ chrome-profile/
 .idea/
 *.swp
 *~
+
+# Claude Code 本地工具（技能/规范，本地专属，不入库）
+.claude/
 
 # OS
 .DS_Store

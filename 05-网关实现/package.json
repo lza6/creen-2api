@@ -20,16 +20,22 @@
   "scripts": {
     "start": "bun run src/index.ts",
     "dev": "bun --watch run src/index.ts",
-    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test test/unit",
     "test:unit": "bun test test/unit",
     "test:e2e": "bun test test/e2e",
+    "check:config": "node scripts/check-config-usage.cjs",
+    "check": "bun run typecheck && bun run test:unit && bun run check:config",
     "login": "bun run src/tools/login-helper.ts",
     "register": "bun run src/tools/register-bot.ts",
+    "register:helper": "bun run src/tools/register-helper.ts",
+    "mail:check": "bun run src/tools/mail-check.ts",
     "doctor": "bun run src/tools/doctor.ts"
   },
   "dependencies": {},
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "typescript": "^7.0.2"
   },
   "engines": {
     "bun": ">=1.1"

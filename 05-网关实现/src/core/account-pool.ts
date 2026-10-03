@@ -10,6 +10,7 @@
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import type { Config } from "./config";
+import { cooldownFor } from "./config";
 import { UpstreamClient, UpstreamError } from "./upstream";
 
 export type TokenStatus = "active" | "cooldown" | "invalid" | "exhausted";
@@ -211,9 +212,9 @@ export class AccountPool {
       console.warn(`[pool] token ${mask(t.token)} 积分耗尽`);
       return;
     }
-    // 其它失败：冷却
+    // 其它失败：冷却（档位来自 config.cooldown_map）
     t.failCount++;
-    const cd = Math.min(300, t.failCount * 15);
+    const cd = cooldownFor(this.cfg, t.failCount);
     t.status = "cooldown";
     t.cooldownUntil = Date.now() + cd * 1000;
     console.warn(`[pool] token ${mask(t.token)} 失败 ${t.failCount} 次，冷却 ${cd}s`);

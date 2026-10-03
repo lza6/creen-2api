@@ -1,0 +1,14 @@
+node_modules
+.git
+.github
+data
+config.json
+config.local.json
+*.log
+test
+docs
+.specify
+.claude
+*.md
+!README.md
+.DS_Store

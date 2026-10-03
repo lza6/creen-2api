@@ -53,7 +53,21 @@ bun run src/tools/login-helper.ts
 
 会打开浏览器让你登录，登录成功后自动提取 token 写入 `data/accounts.json` 并校验有效性。
 
-### 方式 C：自动注册（需邮箱 API）
+### 方式 C：注册助手（人类在环，推荐）
+
+```bash
+# 1) 在 config.local.json 配置 mail_api（见下），或用环境变量提供管理员密码
+bun run src/tools/mail-check.ts        # 先自检邮箱 API 连通性
+bun run src/tools/register-helper.ts   # 打开浏览器 → 你填邮箱/密码/过 CF → 自动读码 → 落库 token
+```
+
+工具会自动生成收件地址、读出验证码、探测登录 token 并校验入库；
+**人机验证与提交由你本人在可见浏览器中完成**。
+
+> **注意**：本工具用于你**本人账号**的注册/登录自动化，不用于批量注册。
+> 批量注册违反上游服务条款，且会导致整批账号被风控封禁。
+
+### 方式 D：自动注册框架（需配置邮箱 API）
 
 ```bash
 bun run src/tools/register-bot.ts --dry-run   # 先检查配置
@@ -111,6 +125,7 @@ curl -X POST http://127.0.0.1:47840/v1/videos/generations \
 | `/api/pool/refresh` | POST | 刷新账号积分 |
 | `/api/pool/add` | POST | 动态添加 token |
 | `/api/catalog/refresh` | POST | 刷新模型目录 |
+| `/media/<file>` | GET | 本地落盘的生成结果（`download_media` 开启时） |
 | `/ui` | GET | Web 控制台 |
 
 ### 请求参数（`/v1/images/generations`）
@@ -135,6 +150,11 @@ curl -X POST http://127.0.0.1:47840/v1/videos/generations \
   "listen_addr": "127.0.0.1:47840",
   "upstream_base_url": "https://www.creen.ai",
 
+  // 【安全】网关入口鉴权。非本机部署必填，否则拒绝启动
+  "gateway_api_key": "your-random-secret",
+  "trust_proxy": false,           // 置于反向代理后设为 true（限流按真实 IP 分桶）
+  "allow_insecure_public": false, // 仅在可信内网时显式允许「非回环+无密钥」
+
   // 账号：二选一或都填
   "tokens": ["eyJhbGci..."],                    // 直接填 x-auth-token
   "accounts": [{ "email": "...", "password": "..." }],  // 配合 email_config 自动续期
@@ -151,23 +171,63 @@ curl -X POST http://127.0.0.1:47840/v1/videos/generations \
   "poll_interval_sec": 3,      // 任务轮询间隔
   "poll_max_attempts": 100,    // 轮询上限（3×100=300秒）
 
-  "max_concurrent_requests": 8,
-  "per_token_concurrent": 2,   // 单 token 并发上限
+  "max_concurrent_requests": 8,  // 全局并发上限（超额排队；0=不限）
+  "per_token_concurrent": 2,     // 单 token 并发上限
+
+  "rate_limit_enabled": true,    // 生成端点限流（按客户端 IP）
+  "rate_limit_requests": 120,    // 窗口内上限
+  "rate_limit_window_sec": 3600, // 窗口长度（秒）
 
   "auto_renew": true,          // token 失效自动重新登录
   "token_check_min": 30,       // 检查间隔（分钟）
 
   "retry_enabled": true,
   "max_attempts": 3,           // 失败换号重试次数
+  "cooldown_map": "0,15,60,120,300",  // 账号失败冷却档位（秒）
 
-  "download_media": true,
+  "download_media": true,      // 结果落盘（上游 URL 会过期）
+  "media_dir": "data/media",   // 落盘目录，经 /media/<file> 提供
+
+  "redact_logs": true,         // 日志脱敏（token/JWT/api_key）
   "ui_enabled": true
 }
 ```
 
 **局部覆盖**：可在 `config.local.json` 只写要改的字段（不入库，适合放 token）。
 
+**环境变量**（优先于配置文件，适合放密钥）：
+
+| 变量 | 作用 |
+|------|------|
+| `CREEN_GATEWAY_API_KEY` | 网关入口鉴权密钥 |
+| `CREEN_TOKENS` | 逗号分隔的 token，追加到 `tokens` |
+| `CREEN_LISTEN_ADDR` | 监听地址 |
+| `CREEN_UPSTREAM_BASE_URL` | 上游地址 |
+| `CREEN_CONFIG` | 配置文件路径 |
+
 ---
+
+## 安全
+
+网关代理的是**你自己的付费账号**，一次生成会真实消耗积分。请务必：
+
+1. **配置 `gateway_api_key`**。未配置时，任何能访问该端口的人都能调用你的账号。
+2. **默认仅监听 `127.0.0.1`**。非回环监听且未配置密钥时，网关会**拒绝启动**
+   （除非显式设置 `allow_insecure_public: true`）。对外暴露请置于反向代理之后并启用 HTTPS。
+3. **反向代理场景**设置 `trust_proxy: true`，限流才会按真实客户端 IP 分桶
+   （取 `x-forwarded-for` 最后一跳，客户端无法伪造）。
+4. **不要提交 `config.json`**（含 token）。`.gitignore` 已忽略；
+   密钥建议通过 `.env` / 环境变量注入。
+5. 生产环境建议关闭或保护 `/ui` 面板（`ui_enabled: false`），访问 `/api/*` 需携带密钥。
+6. **媒体访问签名**：启用 `gateway_api_key` 后，`/media/<file>` 需携带 `?sig=<HMAC>`
+   （由网关在返回结果里自动生成），防止媒体 URL 泄露后被任意下载。
+
+> 已实测：启用 `gateway_api_key` 后，`/v1/*` 与 `/api/*` 无密钥返回 401；
+> `/media/*` 无签名或错误签名返回 403；`/healthz` 与 `/ui` 外壳保持公开
+> （UI 内输入密钥调用 API）。
+
+---
+
 
 ## 账号池机制
 
@@ -191,18 +251,43 @@ curl -X POST http://127.0.0.1:47840/v1/videos/generations \
 | 命令 | 用途 |
 |------|------|
 | `bun run src/tools/doctor.ts` | 诊断运行时/配置/连通性/token |
-| `bun run src/tools/login-helper.ts` | 打开浏览器自动提取 token |
-| `bun run src/tools/register-bot.ts` | 自动注册（需邮箱 API） |
+| `bun run src/tools/login-helper.ts` | 打开浏览器，登录后自动提取 token |
+| `bun run src/tools/mail-check.ts` | 邮箱 API 连通性自检 |
+| `bun run src/tools/register-helper.ts` | 注册助手（人类在环）：自动取码 + 落库 token |
+| `bun run src/tools/register-bot.ts` | 自动注册框架（需配置邮箱 API） |
 
 ---
 
 ## 测试
 
 ```bash
-bun test              # 全部（37 项）
-bun test test/unit    # 单元（24 项，无网络）
-bun test test/e2e     # E2E（13 项，真实调用上游）
+bun run check         # 统一门禁：类型检查 + 单元测试 + 配置消费审计
+bunx tsc --noEmit     # 类型检查（strict）
+bun test test/unit    # 单元（59 项，无网络、零积分消耗）
+bun test test/e2e     # E2E（13 项，仅公开端点真实调用上游）
 ```
+
+> 生成端点会真实消耗账号积分，故测试**只覆盖公开只读端点**；
+> 详见 `.specify/memory/constitution.md` 的「上游积分红线」。
+
+---
+
+## 部署
+
+### Docker
+
+```bash
+cp config.example.json config.json   # 填入 tokens 与 gateway_api_key
+docker compose up -d
+docker compose logs -f
+```
+
+镜像基于 `oven/bun`（Node 会因 TLS 指纹被上游 Cloudflare 拦截）。
+配置与 `data/` 通过 volume 挂载，容器内以非 root 运行。
+
+### 反向代理
+
+置于 Nginx/Caddy 之后并启用 HTTPS；建议仅暴露必要端点，`/ui` 面板可按需关闭。
 
 ---
 
@@ -223,21 +308,25 @@ bun test test/e2e     # E2E（13 项，真实调用上游）
 
 ```
 src/
-├── index.ts              Bun.serve 入口 + 路由
+├── index.ts              Bun.serve 入口 + 路由 + 鉴权/限流/并发门控
 ├── api/openai.ts         OpenAI 兼容层（models/images/videos/chat）
 ├── core/
 │   ├── upstream.ts       上游 HTTP 客户端（浏览器头 + 错误检测）
-│   ├── config.ts         配置加载（支持 local 覆盖）
+│   ├── config.ts         配置加载（local/环境变量覆盖 + 校验）
 │   ├── catalog.ts        模型目录（动态刷新 + 内置快照兜底）
 │   ├── account-pool.ts   账号池（轮换/冷却/积分/持久化）
 │   ├── generation.ts     生成编排（积分→提交→轮询→结果）
 │   ├── auth.ts           登录/注册/续期 + 可插拔邮箱 API
-│   └── auto-renew.ts     定时校验与自动续期
+│   ├── auto-renew.ts     定时校验与自动续期
+│   ├── middleware.ts     并发门控 / 限流 / 网关鉴权 / IP 提取
+│   ├── media.ts          结果媒体本地化（落盘 + /media 服务）
+│   └── log.ts            日志脱敏
 ├── tools/                doctor / login-helper / register-bot
 └── web/panel.ts          Web 控制台（单页，零依赖）
 ```
 
 设计原则：核心逻辑（`core/`）与 HTTP 层解耦，可独立测试与复用。
+`dependencies` 保持为空（bun 内置 HTTP/fetch/TLS 已足够）。
 
 ---
 
